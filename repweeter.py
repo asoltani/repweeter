@@ -34,7 +34,7 @@ for s in reversed(ss):
 		
 
 print "###############################################################################"
-print "### TOP REPWEETS:"
+print "### TOP REPWEETS FOR @%s:" % args.user
 c = 0
 for t in sorted(dup.items(), key=itemgetter(1), reverse=True):
 	print "(%s) %s" % (t[1], t[0])
@@ -43,7 +43,7 @@ for t in sorted(dup.items(), key=itemgetter(1), reverse=True):
 		break
 
 print "\n###############################################################################"
-print "### ACTUAL TWEETS W/ REPWEET COUNT:"
+print "### ACTUAL TWEETS W/ REPWEET COUNT FOR @%s:" % args.user
 for line in reversed(buf):
 	print line
 
