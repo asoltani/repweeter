@@ -22,15 +22,15 @@ for s in reversed(ss):
 	for u in s.urls:
 		url = ''
 		try:
-			lurl = urllib2.urlopen('http://therealurl.appspot.com?url=' + u.expanded_url).read()
-			url = re.match("(http[^\?]*)", lurl).group(0)
+			url = urllib2.urlopen('http://therealurl.appspot.com?url=' + u.expanded_url).read()
+#			url = re.match("(http[^\?]*)", lurl).group(0)
 		except urllib2.URLError, e:
 			pass
 			
 		url = url if url is not None else u
-		text = s.text.replace(u.url,url)
-		dup[url] += 1 
-		buf.append("(%s) %s | %s" % (dup[url], s.created_at[0:16], text.decode('utf-8')))
+		if url: dup[url] += 1
+		text = s.text.replace(u.url,url).encode('ascii', 'ignore')
+		buf.append("(%s) %s | %s" % (dup[url], s.created_at[0:16], text))
 		
 
 print "###############################################################################"
@@ -42,9 +42,8 @@ for t in sorted(dup.items(), key=itemgetter(1), reverse=True):
 	if c >= 10:
 		break
 
-print "\n\n"
-print "###############################################################################"
-print "### ACTUAL TWEETS (and REPWEETS):"
+print "\n###############################################################################"
+print "### ACTUAL TWEETS W/ REPWEET COUNT:"
 for line in reversed(buf):
 	print line
 
